@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/honeybadger2788/backendChallenge#readme",
   "dependencies": {
-    "express": "^4.17.2"
+    "express": "^4.17.2",
+    "sequelize": "^6.15.0"
   }
 }
