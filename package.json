@@ -1,0 +1,24 @@
+{
+  "name": "backendChallenge",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "start": "nodemon src/app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/honeybadger2788/backendChallenge.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/honeybadger2788/backendChallenge/issues"
+  },
+  "homepage": "https://github.com/honeybadger2788/backendChallenge#readme",
+  "dependencies": {
+    "express": "^4.17.2"
+  }
+}
