@@ -9,7 +9,7 @@ let port = process.env.PORT || 3000;
 
 app.use(express.json());
 
-app.use('/users', usersRouter);
+app.use('/auth', usersRouter);
 
 app.use('/movies', moviesRouter);
 
