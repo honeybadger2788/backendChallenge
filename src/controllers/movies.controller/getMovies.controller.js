@@ -2,6 +2,7 @@ const db = require('../../database/models/index');
 
 module.exports = (req, res) => {
     db.Movie.findAll({
+        attributes: [ 'title', 'image_url', 'launch_date' ],
         where: {
             deleted_at: null
         }
