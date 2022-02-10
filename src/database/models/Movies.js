@@ -16,7 +16,7 @@ module.exports = function(sequelize, dataTypes){
             type: dataTypes.STRING(45),
             notNull: true
         },
-        creation_date: {
+        launch_date: {
             type: dataTypes.DATE,
             notNull: true
         },
