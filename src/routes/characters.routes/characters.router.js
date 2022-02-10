@@ -1,8 +1,8 @@
 const { Router } = require('express');
 const router = Router();
 
-const charactersController = require('../../controllers/character.controller/character.controller')
+const getCharacters = require('../../controllers/characters.controller/getCharacters.controller')
 
-router.get('/', charactersController.index)
+router.get('/', getCharacters)
 
 module.exports = router
