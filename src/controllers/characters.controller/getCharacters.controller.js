@@ -2,6 +2,7 @@ const db = require('../../database/models/index');
 
 module.exports = (req, res) => {
     db.Character.findAll({
+        attributes: [ 'name', 'image_url' ],
         where: {
             deleted_at: null
         }
