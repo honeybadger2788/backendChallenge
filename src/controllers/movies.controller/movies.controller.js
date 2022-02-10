@@ -1,5 +1,20 @@
+const db = require('../../database/models/index');
+
 module.exports = {
     index: (req, res) => {
-        res.send('Movies')
+        db.Movie.findAll({
+            where: {
+                deleted_at: null
+            }
+        })
+        .then(result => {
+            res.json({ status: 201, body: result })
+        })
+        .catch(e => {
+            res.json({
+                status: 500,
+                body: e
+            })
+        })
     }
 }

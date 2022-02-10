@@ -32,7 +32,7 @@ module.exports = function(sequelize, dataTypes){
     let config = {
         tableName: 'movies',
         timestamps: true,
-        underscored: true
+        underscored: true,
     }
        
     const Movie = sequelize.define (alias, cols, config);
