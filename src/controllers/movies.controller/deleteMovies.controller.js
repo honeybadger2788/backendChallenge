@@ -9,7 +9,7 @@ module.exports = (req,res) => {
         }
     })
     .then(result => {
-        result[0] === 1?
+        result ?
         res.json({ status: 200, body: 'Pelicula eliminada exitosamente' }) :
         res.json({ status: 404, body: 'Pelicula no encontrada' })
     })
