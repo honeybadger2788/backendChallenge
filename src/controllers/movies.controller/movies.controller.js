@@ -8,7 +8,7 @@ module.exports = {
             }
         })
         .then(result => {
-            res.json({ status: 201, body: result })
+            res.json({ status: 200, body: result })
         })
         .catch(e => {
             res.json({
