@@ -33,6 +33,7 @@ module.exports = function(sequelize, dataTypes){
         tableName: 'movies',
         timestamps: true,
         underscored: true,
+        paranoid: true
     }
        
     const Movie = sequelize.define (alias, cols, config);
