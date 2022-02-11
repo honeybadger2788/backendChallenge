@@ -36,7 +36,17 @@ module.exports = function(sequelize, dataTypes){
         paranoid: true
     }
        
-    const Movie = sequelize.define (alias, cols, config);
+    const Movie = sequelize.define(alias, cols, config);
+    
+    Movie.associate = function(models){
+        Movie.belongsToMany(models.Character, {
+        as: "characters",
+        through: "characters_movies",
+        foreignKey: "id_movie",
+        otherKey: "id_character",
+        timestamps: false
+        });
+    }
     
     return Movie
 }

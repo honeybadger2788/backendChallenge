@@ -1,6 +1,6 @@
 module.exports = function(sequelize, dataTypes){
     let alias = "Character";
-
+    
     let cols = {
         id_character: {
             type: dataTypes.INTEGER,
@@ -29,14 +29,26 @@ module.exports = function(sequelize, dataTypes){
             notNull: true
         },
     }
+    
     let config = {
         tableName: 'characters',
         timestamps: true,
         underscored: true,
         paranoid: true
     }
-       
-    const Character = sequelize.define (alias, cols, config);
+    
+    const Character = sequelize.define(alias, cols, config);
+    
+    Character.associate = function(models){
+        Character.belongsToMany(models.Movie, {
+            as: "movies",
+            through: "characters_movies",
+            uniqueKey: 'id',
+            foreignKey: "id_character",
+            otherKey: "id_movie",
+            timestamps: false
+        });
+    }
     
     return Character
 }
