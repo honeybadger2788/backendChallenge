@@ -1,5 +1,5 @@
 module.exports = function(sequelize, dataTypes, models){
-    let alias = "Character-Movie";
+    let alias = "Character_Movie";
     
     let cols = {
         id: {
@@ -7,21 +7,7 @@ module.exports = function(sequelize, dataTypes, models){
             primaryKey: true,
             autoIncrement: true,
             notNull: true
-        },
-        id_character: {
-            type: dataTypes.INTEGER,
-            references: {
-                model: 'characters',
-                key: 'id_character'
-            }
-        },
-        id_movie: {
-            type: dataTypes.INTEGER,
-            references: {
-                model: 'movies',
-                key: 'id_movie'
-            }
-        }         
+        }
     }
     let config = {
         tableName: 'characters_movies'

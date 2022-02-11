@@ -1,28 +1,34 @@
 const db = require('../../database/models/index');
 
-module.exports = (req,res) => {
-    const { title, image_url, launch_date, rate, id_genre } = req.body
-    db.Movie.findOrCreate({
-        where: {
-            title
-        },
-        defaults: {
-            title,
+module.exports = async (req,res) => {
+    const { title, characters, image_url, launch_date, rate, id_genre } = req.body
+    
+    const movie = await db.Movie.create({
+        title,
+        image_url,
+        launch_date,
+        rate,
+        id_genre
+    })
+    
+    for (let i = 0; i < characters.length; i++) {
+        const { name, image_url, age, weight, story } = characters[i]
+        const character = await db.Character.create({
+            name,
             image_url,
-            launch_date,
-            rate,
-            id_genre
-        }
-    })
-    .then(result => {
-        result[1] ?
-        res.json({ status: 201, body: result[0] }) :
-        res.json({ status: 412, body: 'Pelicula existente' })
-    })
-    .catch(e => {
-        res.json({
-            status: 500,
-            body: e
+            age,
+            weight,
+            story
         })
+        
+        await movie.addCharacter(character)
+    }
+    
+    const result = await db.Movie.findOne({
+        where: { title },
+        include: db.Character
     })
+    
+    res.json({ status: 201, body: result })
+    
 }
