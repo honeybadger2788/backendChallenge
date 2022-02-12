@@ -1,5 +1,5 @@
 module.exports = function(sequelize, dataTypes){
-    let alias = "Movie";
+    let alias = 'Movie';
 
     let cols = {
         id_movie: {
@@ -38,13 +38,18 @@ module.exports = function(sequelize, dataTypes){
        
     const Movie = sequelize.define(alias, cols, config);
     
-    Movie.associate = function(models){
+    Movie.associate = function (models) {
+        
         Movie.belongsToMany(models.Character, {
         through: 'characters_movies',
-        foreignKey: "id_movie",
-        otherKey: "id_character",
+        foreignKey: 'id_movie',
+        otherKey: 'id_character',
         timestamps: false
         });
+
+        Movie.belongsTo(models.Genre,{
+            foreignKey: 'id_genre'
+        })
     }
     
     return Movie
