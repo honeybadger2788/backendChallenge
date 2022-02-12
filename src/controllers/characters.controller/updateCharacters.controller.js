@@ -1,6 +1,7 @@
 const db = require('../../database/models/index');
 
-module.exports = (req,res) => {
+module.exports = (req, res) => {
+    const { id_character } = req.params
     const { name, image_url, age, weight, story } = req.body
     db.Character.update({
         name,
@@ -10,9 +11,7 @@ module.exports = (req,res) => {
         story
     },
     {
-        where: {
-            name
-        }
+        where: { id_character }
     })
     .then(result => {
         result[0] === 1 ?
