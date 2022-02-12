@@ -3,13 +3,12 @@ const db = require('../../database/models/index');
 const generateApiKey = require('generate-api-key');
 
 module.exports = (req, res) => {
-    const { username, password } = req.body
+    const { username } = req.body
     db.User.findOrCreate({
         where: {
             username
         },
         defaults: {
-            password,
             token: generateApiKey({ method: 'string', length: 45 }),
         }
     })
