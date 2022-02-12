@@ -1,6 +1,7 @@
 const db = require('../../database/models/index');
 
-module.exports = (req,res) => {
+module.exports = (req, res) => {
+    const { id_movie } = req.params
     const { title, image_url, launch_date, rate, id_genre } = req.body
     db.Movie.update({
         title,
@@ -10,9 +11,7 @@ module.exports = (req,res) => {
         id_genre
     },
     {
-        where: {
-            title
-        }
+        where: { id_movie }
     })
     .then(result => {
         result[0] === 1 ?

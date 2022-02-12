@@ -10,7 +10,7 @@ const deleteMovies = require('../../controllers/movies.controller/deleteMovies.c
 router.get('/:id_movie/detail', getMovieDetail)
 router.get('/', getMovies)
 router.post('/', createMovies)
-router.put('/', updateMovies)
+router.put('/:id_movie', updateMovies)
 router.delete('/:id_movie', deleteMovies)
 
 module.exports = router
