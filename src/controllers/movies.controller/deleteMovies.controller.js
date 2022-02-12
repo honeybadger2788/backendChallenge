@@ -1,12 +1,9 @@
 const db = require('../../database/models/index');
 
 module.exports = (req,res) => {
-    const { title } = req.body
-    db.Movie.destroy(
-    {
-        where: {
-            title
-        }
+    const { id_movie } = req.params
+    db.Movie.destroy({
+        where: { id_movie }
     })
     .then(result => {
         result ?

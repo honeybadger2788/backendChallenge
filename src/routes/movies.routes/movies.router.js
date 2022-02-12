@@ -11,6 +11,6 @@ router.get('/:id_movie/detail', getMovieDetail)
 router.get('/', getMovies)
 router.post('/', createMovies)
 router.put('/', updateMovies)
-router.delete('/', deleteMovies)
+router.delete('/:id_movie', deleteMovies)
 
 module.exports = router
