@@ -1,19 +1,40 @@
 const db = require('../../database/models/index');
 
-module.exports = (req, res) => {
+module.exports = async (req, res) => {
     const { username, token } = req.body
-    db.User.findOne({
-        where: { username } 
+
+    if (!username || !token)
+    return res.json({
+        error: {
+            status: 400,
+            msg: 'Ingresar username y/o token'
+        }
     })
-    .then(result => {
-        result && result.token === token ?
-        res.json({ status: 200, body: 'Ok' }) :
-        res.json({ status: 401, body: 'Usuario y/o token incorrecto' })
-    })
-    .catch(e => {
-        res.json({
-            status: 500,
-            body: e
+    
+    try {
+        
+        const result = await db.User.findOne({
+            where: { username } 
         })
-    })
+        
+        return result && result.token === token ?
+        res.json({
+            status: 200,
+            msg: 'Ok'
+        }) :
+        res.json({
+            error: {
+                status: 401,
+                msg: 'Usuario y/o token incorrecto'
+            }
+        })
+        
+    } catch(e) {
+        res.json({
+            error: {
+                status: 500,
+                msg: e
+            }
+        })
+    }
 }
