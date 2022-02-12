@@ -10,7 +10,7 @@ module.exports = (req, res) => {
     .then(result => {
         result && result.password === password && result.token === token ?
         res.json({ status: 200, body: 'Ok' }) :
-        res.json({ status: 404, body: 'Usuario y/o contraseña incorrecta' })
+        res.json({ status: 401, body: 'Usuario y/o token incorrecto' })
     })
     .catch(e => {
         res.json({

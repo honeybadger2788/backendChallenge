@@ -10,7 +10,7 @@ const deleteCharacters = require('../../controllers/characters.controller/delete
 router.get('/:id_character/detail', getCharacterDetail)
 router.get('/', getCharacters)
 router.post('/', createCharacters)
-router.put('/', updateCharacters)
-router.delete('/', deleteCharacters)
+router.put('/:id_character', updateCharacters)
+router.delete('/:id_character', deleteCharacters)
 
 module.exports = router

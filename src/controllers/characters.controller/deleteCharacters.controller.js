@@ -1,12 +1,9 @@
 const db = require('../../database/models/index');
 
 module.exports = (req,res) => {
-    const { name } = req.body
-    db.Character.destroy(
-        {
-            where: {
-                name
-            }
+    const { id_character } = req.params
+    db.Character.destroy({
+            where: { id_character }
         })
         .then(result => {
             result ?
