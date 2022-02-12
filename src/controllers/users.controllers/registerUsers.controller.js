@@ -8,18 +8,18 @@ module.exports = async (req, res) => {
     
     if (!username)
     return res.json({
-        status: 400,
-        msg: 'Ingresar username'
+        error: {
+            status: 400,
+            msg: 'Ingresar username'
+        }
     })
     
     try {
-
+        
         const result = await db.User.findOrCreate({
-            where: {
-                username
-            },
-            defaults: {
-                token: generateApiKey({ method: 'string', length: 45 }),
+            where: { username },
+            defaults: { 
+                token: generateApiKey({ method: 'string', length: 45 })
             }
         })
         
@@ -30,15 +30,19 @@ module.exports = async (req, res) => {
             token: result[0].token
         }) :
         res.json({
-            status: 400,
-            body: 'Usuario ya registrado'
+            error: {
+                status: 400,
+                msg: 'Usuario ya registrado'
+            }
         })
         
     } catch (e) {
         
         return res.json({
-            status: 500,
-            error: e
+            error: {
+                status: 500,
+                msg: e
+            }
         })
         
     }
