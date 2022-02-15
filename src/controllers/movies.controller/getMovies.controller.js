@@ -28,7 +28,7 @@ module.exports = async (req, res) => {
         result.length !== 0 ?
             res.json({
                 status: 200,
-                msg: result
+                data: result
             }) : 
             res.json({
                 status: 404,
@@ -44,5 +44,5 @@ module.exports = async (req, res) => {
             }
         })
     }
-    
+
 }
