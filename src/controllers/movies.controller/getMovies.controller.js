@@ -1,6 +1,6 @@
 const db = require('../../database/models/index');
 
-module.exports = (req, res) => {
+module.exports = async (req, res) => {
     const { order } = req.query
     
     let filters = {}
@@ -22,16 +22,27 @@ module.exports = (req, res) => {
     if (order != null && validSortingTypes.includes(order.toLowerCase()))
         query = { ...query, order: [[field, order]] }
     
-    db.Movie.findAll(query)
-    .then(result => {
+    try {
+        const result = await db.Movie.findAll(query)
+
         result.length !== 0 ?
-            res.json({ status: 200, body: result }) : 
-            res.json({ status: 404, body: 'Pelicula/s no encontrada/s' })
-    })
-    .catch(e => {
+            res.json({
+                status: 200,
+                msg: result
+            }) : 
+            res.json({
+                status: 404,
+                msg: 'Pelicula/s no encontrada/s'
+            })
+        
+    } catch (e) {
+
         res.json({
-            status: 500,
-            body: e
+            error: {
+                status: 500,
+                msg: e
+            }
         })
-    })
+    }
+    
 }
