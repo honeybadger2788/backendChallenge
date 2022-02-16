@@ -25,19 +25,21 @@ module.exports = async (req, res) => {
     try {
         const result = await db.Movie.findAll(query)
 
-        result.length !== 0 ?
+        return result.length !== 0 ?
             res.json({
                 status: 200,
                 data: result
             }) : 
             res.json({
-                status: 404,
-                msg: 'Pelicula/s no encontrada/s'
+                error: {
+                    status: 404,
+                    msg: 'Pelicula/s no encontrada/s'
+                }
             })
         
     } catch (e) {
 
-        res.json({
+        return res.json({
             error: {
                 status: 500,
                 msg: e
