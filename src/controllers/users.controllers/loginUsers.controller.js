@@ -3,7 +3,8 @@ const db = require('../../database/models/index');
 const { validationResult } = require('express-validator');
 
 module.exports = async (req, res) => {
-    const errors = validationResult(req)  
+    const errors = validationResult(req) 
+    
     const { username, token } = req.body
 
     if (!errors.isEmpty())
