@@ -1,15 +1,17 @@
 const db = require('../../database/models/index');
+const { validationResult } = require('express-validator');
 
 module.exports = async (req, res) => {
+    const errors = validationResult(req)  
     const { username, token } = req.body
 
-    if (!username || !token)
-    return res.json({
-        error: {
-            status: 400,
-            msg: 'Ingresar username y/o token'
-        }
-    })
+    if (!errors.isEmpty())
+        return res.json({
+            errors: {
+                status: 400,
+                errors: errors.array()
+            }
+        })
     
     try {
         
