@@ -1,4 +1,5 @@
 const db = require('../../database/models/index');
+
 const { validationResult } = require('express-validator');
 
 module.exports = async (req, res) => {
