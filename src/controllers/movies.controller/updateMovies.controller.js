@@ -3,6 +3,18 @@ const db = require('../../database/models/index');
 module.exports = async (req, res) => {
     const { id_movie } = req.params
     const { title, image_url, launch_date, rate, id_genre } = req.body
+
+    if (title === undefined &&
+        image_url === undefined &&
+        launch_date === undefined &&
+        rate === undefined &&
+        id_genre === undefined)
+        return res.json({
+            error: {
+                status: 400,
+                msg: 'Ingresar datos a actualizar'
+            }
+        })
     
     try {
         
@@ -22,17 +34,21 @@ module.exports = async (req, res) => {
             status: 200,
             msg: 'Pelicula actualizada exitosamente'
         }) :
-        res.json({
-            status: 404,
-            msg: 'Pelicula no encontrada'
+            res.json({
+                error: {                
+                    status: 404,
+                    msg: 'Pelicula no encontrada'
+            }
         })
         
     } catch (e) {
-        res.json({
+
+        return res.json({
             error: {
                 status: 500,
                 msg: e
             }
         })
     }
+
 }
