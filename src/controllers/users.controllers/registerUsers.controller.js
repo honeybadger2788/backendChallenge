@@ -1,18 +1,19 @@
 const db = require('../../database/models/index');
 
 const generateApiKey = require('generate-api-key');
+const { validationResult } = require ('express-validator')
 
 module.exports = async (req, res) => {
-    
+    const errors = validationResult(req)    
     const { username } = req.body
     
-    if (!username)
-    return res.json({
-        error: {
-            status: 400,
-            msg: 'Ingresar username'
-        }
-    })
+    if (!errors.isEmpty())
+        return res.json({
+            errors: {
+                status: 400,
+                errors: errors.array()
+            }
+        })
     
     try {
         
