@@ -5,10 +5,22 @@ const { validationResult } = require('express-validator')
 module.exports = async (req, res) => {
     const { id_movie } = req.params
     const { title, image_url, launch_date, rate, id_genre } = req.body
-    
-    try {
-        validationResult(req).throw() // permite enviar los errores de validacion a traves del catch
 
+    /* if (!title &&
+        !image_url &&
+        !launch_date &&
+        !rate &&
+        !id_genre)
+        return res.json({
+            error: {
+                status: 400,
+                msg: 'Ingresar datos a actualizar'
+            }
+        })
+     */
+    try {
+        validationResult(req).throw()
+        
         const result = await db.Movie.update({
             title,
             image_url,

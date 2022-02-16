@@ -9,33 +9,50 @@ const updateMovies = require('../../controllers/movies.controller/updateMovies.c
 const deleteMovies = require('../../controllers/movies.controller/deleteMovies.controller')
 
 const idValidation = param('id_movie')
-        .isInt().withMessage('El id debe ser un numero')
+.isInt().withMessage('El id debe ser un numero entero')
 
 router.get('/:id_movie/detail',[ idValidation ], getMovieDetail)
 
 router.get('/', getMovies)
 
-router.post('/', createMovies)
+router.post('/', [
+    body('title')
+    .notEmpty().withMessage('Debe ingresar un titulo')
+    .isString().isLength({ min: 2, max: 45 }).trim().withMessage('El titulo debe tener al menos 2 caracteres'),
+    body('image_url')
+    .notEmpty().withMessage('Debe ingresar una imagen')
+    .isURL().trim(),
+    body('launch_date')
+    .notEmpty().withMessage('Debe ingresar una fecha de lanzamiento')
+    .isDate(),
+    body('rate')
+    .notEmpty().withMessage('Debe ingresar un puntaje')
+    .isInt({ min: 1, max: 5 }).withMessage('El puntaje debe ser del 1 al 5'),
+    body('id_genre')
+    .notEmpty().withMessage('Debe ingresar el id de un genero')
+    .isInt().withMessage('El id debe ser un entero')
+], createMovies)
 
 router.put('/:id_movie', [
     idValidation,
     body('title')
-        .notEmpty().withMessage('Debe ingresar un titulo')
+        .optional()
+        // no valida que el titulo no contenga solo espacios
         .isString().isLength({ min: 2, max: 45 }).trim().withMessage('El titulo debe tener al menos 2 caracteres'),
     body('image_url')
-        .notEmpty().withMessage('Debe ingresar una imagen')
-        .isURL().trim(),
+        .optional()
+        .isURL().trim().withMessage('Ingresar una URL valida'),
     body('launch_date')
-        .notEmpty().withMessage('Debe ingresar una fecha de lanzamiento')
-        .isDate(),
+        .optional()
+        .isDate().withMessage('Ingresar una fecha valida'),
     body('rate')
-        .notEmpty().withMessage('Debe ingresar un puntaje')
+        .optional()
         .isInt({ min: 1, max: 5 }).withMessage('El puntaje debe ser del 1 al 5'),
     body('id_genre')
-        .notEmpty().withMessage('Debe ingresar el id de un genero')
+        .optional()
         .isInt().withMessage('El id debe ser un entero')
 ], updateMovies)
 
-router.delete('/:id_movie', [idValidation], deleteMovies)
+router.delete('/:id_movie', [ idValidation ], deleteMovies)
 
 module.exports = router
