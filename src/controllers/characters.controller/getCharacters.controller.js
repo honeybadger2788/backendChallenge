@@ -1,6 +1,6 @@
 const db = require('../../database/models/index');
 
-module.exports = (req, res) => { 
+module.exports = async (req, res) => { 
     let filters = {}
     // permite armar la query de busqueda dinamica
     let query = { attributes: ['name', 'image_url'] } // campos a mostrar
@@ -15,16 +15,29 @@ module.exports = (req, res) => {
             query = { ...query, where: filters }
     })
 
-    db.Character.findAll(query)
-    .then(result => {
-        result.length !== 0 ?
-            res.json({ status: 200, body: result }) : 
-            res.json({ status: 404, body: 'Personaje/s no encontrado/s' })
-    })
-    .catch(e => {
+    try {
+        const result = await db.Character.findAll(query)
+
+        return result.length !== 0 ?
+            res.json({
+                status: 200,
+                data: result
+            }) : 
+            res.json({
+                error: {
+                    status: 404,
+                    msg: 'Personaje/s no encontrado/s'
+                }
+            })
+        
+    } catch (e) {
+        
         res.json({
-            status: 500,
-            body: e
+            error: {
+                status: 500,
+                msg: e
+            } 
         })
-    })
+
+    }
 }
