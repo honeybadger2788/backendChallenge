@@ -1,19 +1,34 @@
 const db = require('../../database/models/index');
 
-module.exports = (req,res) => {
+module.exports = async (req,res) => {
     const { id_character } = req.params
-    db.Character.destroy({
+    
+    try {
+        
+        const result = await db.Character.destroy({
             where: { id_character }
         })
-        .then(result => {
-            result ?
-            res.json({ status: 200, body: 'Personaje eliminado exitosamente' }) :
-            res.json({ status: 404, body: 'Personaje no encontrado' })
+        
+        return result ?
+        res.json({
+            status: 200,
+            msg: 'Personaje eliminado exitosamente'
+        }) :
+        res.json({
+            error: {
+                status: 404,
+                msg: 'Personaje no encontrado'
+            }
         })
-        .catch(e => {
-            res.json({
+
+    } catch (e) {
+        
+        res.json({
+            error: {  
                 status: 500,
-                body: e
-            })
+                msg: e
+            }
         })
+        
     }
+}
