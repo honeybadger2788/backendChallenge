@@ -1,5 +1,7 @@
 const db = require('../../database/models/index');
 
+const { validationResult } = require('express-validator')
+
 module.exports = async (req, res) => {
     const { order } = req.query
     
@@ -23,6 +25,8 @@ module.exports = async (req, res) => {
         query = { ...query, order: [[field, order]] }
     
     try {
+        validationResult(req).throw()
+
         const result = await db.Movie.findAll(query)
 
         return result.length !== 0 ?

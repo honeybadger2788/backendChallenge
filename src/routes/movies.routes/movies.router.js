@@ -1,6 +1,6 @@
 const { Router } = require('express');
 const router = Router();
-const { param, body } = require('express-validator');
+const { param, body, query } = require('express-validator');
 
 const getMovies = require('../../controllers/movies.controller/getMovies.controller')
 const getMovieDetail = require ('../../controllers/movies.controller/getMovieDetail.controller')
@@ -13,15 +13,27 @@ const idMovieValidation = param('id_movie')
 
 router.get('/:id_movie/detail',[ idMovieValidation ], getMovieDetail)
 
-router.get('/', getMovies)
+router.get('/', [
+    query('title')
+    .optional()
+    .trim().isString().isLength({ min: 2, max: 45 }).withMessage('El titulo debe tener al menos 2 caracteres'),
+    query('image_url')
+    .optional()
+    .trim().isURL().withMessage('Ingresar una URL valida'),
+    query('launch_date')
+    .optional()
+    .isDate().withMessage('Ingresar una fecha valida'),
+    query('id_genre')
+    .optional()
+    .isInt().withMessage('El id debe ser un entero')
+], getMovies)
 
 router.post('/', [
     body('title')
     .notEmpty().withMessage('Debe ingresar un titulo')
     .trim().isString().isLength({ min: 2, max: 45 }).withMessage('El titulo debe tener al menos 2 caracteres'),
     body('image_url')
-    .notEmpty().withMessage('Debe ingresar una imagen')
-    .isURL().trim(),
+    .trim().notEmpty().isURL().withMessage('Debe ingresar una imagen'),
     body('launch_date')
     .notEmpty().withMessage('Debe ingresar una fecha de lanzamiento')
     .isDate(),
@@ -36,20 +48,20 @@ router.post('/', [
 router.put('/:id_movie', [
     idMovieValidation,
     body('title')
-        .optional()
-        .trim().isString().isLength({ min: 2, max: 45 }).withMessage('El titulo debe tener al menos 2 caracteres'),
+    .optional()
+    .trim().isString().isLength({ min: 2, max: 45 }).withMessage('El titulo debe tener al menos 2 caracteres'),
     body('image_url')
-        .optional()
-        .isURL().trim().withMessage('Ingresar una URL valida'),
+    .optional()
+    .trim().isURL().withMessage('Ingresar una URL valida'),
     body('launch_date')
-        .optional()
-        .isDate().withMessage('Ingresar una fecha valida'),
+    .optional()
+    .isDate().withMessage('Ingresar una fecha valida'),
     body('rate')
-        .optional()
-        .isInt({ min: 1, max: 5 }).withMessage('El puntaje debe ser del 1 al 5'),
+    .optional()
+    .isInt({ min: 1, max: 5 }).withMessage('El puntaje debe ser del 1 al 5'),
     body('id_genre')
-        .optional()
-        .isInt().withMessage('El id debe ser un entero')
+    .optional()
+    .isInt().withMessage('El id debe ser un entero')
 ], updateMovies)
 
 router.delete('/:id_movie', [ idMovieValidation ], deleteMovies)
