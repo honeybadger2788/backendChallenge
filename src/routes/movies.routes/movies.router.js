@@ -16,9 +16,9 @@ router.get('/:id_movie/detail',[ idValidation ], getMovieDetail)
 router.get('/', getMovies)
 
 router.post('/', [
-    body('title'
+    body('title')
     .notEmpty().withMessage('Debe ingresar un titulo')
-    .trim().isString().isLength({ min: 2, max: 45 }).trim().withMessage('El titulo debe tener al menos 2 caracteres'),
+    .trim().isString().isLength({ min: 2, max: 45 }).withMessage('El titulo debe tener al menos 2 caracteres'),
     body('image_url')
     .notEmpty().withMessage('Debe ingresar una imagen')
     .isURL().trim(),
