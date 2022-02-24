@@ -1,6 +1,6 @@
 const { Router } = require('express');
 const router = Router();
-const { check , param, body } = require('express-validator');
+const { param, body } = require('express-validator');
 
 const getMovies = require('../../controllers/movies.controller/getMovies.controller')
 const getMovieDetail = require ('../../controllers/movies.controller/getMovieDetail.controller')
@@ -8,10 +8,10 @@ const createMovies = require('../../controllers/movies.controller/createMovies.c
 const updateMovies = require('../../controllers/movies.controller/updateMovies.controller')
 const deleteMovies = require('../../controllers/movies.controller/deleteMovies.controller')
 
-const idValidation = param('id_movie')
+const idMovieValidation = param('id_movie')
 .isInt().withMessage('El id debe ser un numero entero')
 
-router.get('/:id_movie/detail',[ idValidation ], getMovieDetail)
+router.get('/:id_movie/detail',[ idMovieValidation ], getMovieDetail)
 
 router.get('/', getMovies)
 
@@ -34,7 +34,7 @@ router.post('/', [
 ], createMovies)
 
 router.put('/:id_movie', [
-    idValidation,
+    idMovieValidation,
     body('title')
         .optional()
         .trim().isString().isLength({ min: 2, max: 45 }).withMessage('El titulo debe tener al menos 2 caracteres'),
@@ -52,6 +52,6 @@ router.put('/:id_movie', [
         .isInt().withMessage('El id debe ser un entero')
 ], updateMovies)
 
-router.delete('/:id_movie', [ idValidation ], deleteMovies)
+router.delete('/:id_movie', [ idMovieValidation ], deleteMovies)
 
 module.exports = router
