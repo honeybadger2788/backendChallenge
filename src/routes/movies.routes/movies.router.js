@@ -11,7 +11,7 @@ const deleteMovies = require('../../controllers/movies.controller/deleteMovies.c
 const idMovieValidation = param('id_movie')
 .isInt().withMessage('El id debe ser un numero entero')
 
-router.get('/:id_movie/detail',[ idMovieValidation ], getMovieDetail)
+router.get('/:id_movie/detail', [ idMovieValidation ], getMovieDetail)
 
 router.get('/', [
     query('title')
@@ -25,7 +25,10 @@ router.get('/', [
     .isDate().withMessage('Ingresar una fecha valida'),
     query('id_genre')
     .optional()
-    .isInt().withMessage('El id debe ser un entero')
+    .isInt().withMessage('El id debe ser un entero'),
+    query('order')
+    .optional()
+    .isIn(['desc', 'asc'])
 ], getMovies)
 
 router.post('/', [
