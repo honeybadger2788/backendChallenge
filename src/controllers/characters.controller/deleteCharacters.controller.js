@@ -1,9 +1,12 @@
 const db = require('../../database/models/index');
 
+const { validationResult } = require('express-validator')
+
 module.exports = async (req,res) => {
     const { id_character } = req.params
     
     try {
+        validationResult(req).throw()
         
         const result = await db.Character.destroy({
             where: { id_character }
