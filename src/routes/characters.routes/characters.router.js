@@ -40,7 +40,7 @@ router.post('/', [
     .trim().isString()
     .isLength({ min: 2, max: 280 }).withMessage('La historia debe tener menos de 280 caracteres'),
     body('movies')
-    .isArray().withMessage('Debe ingresar al menos una pelicula')
+    .isArray({ min:1 }).withMessage('Debe ingresar al menos una pelicula')
 ], createCharacters)
 
 router.put('/:id_character', [

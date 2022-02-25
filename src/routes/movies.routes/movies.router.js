@@ -44,7 +44,7 @@ router.post('/', [
     body('id_genre')
     .isInt().withMessage('El id debe ser un entero'),
     body('characters')
-    .isArray().withMessage('Debe ingresar al menos un personaje')
+    .isArray({ min:1 }).withMessage('Debe ingresar al menos un personaje')
 ] , createMovies)
 
 router.put('/:id_movie', [
