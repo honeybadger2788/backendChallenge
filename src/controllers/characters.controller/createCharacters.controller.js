@@ -1,9 +1,13 @@
 const db = require('../../database/models/index');
 
+const { validationResult } = require('express-validator')
+
 module.exports = async (req, res) => {
     const { name, image_url, movies, age, weight, story } = req.body
     
     try {
+
+        validationResult(req).throw()
         
         const characterCreated = await db.Character.findOrCreate({
             where: {name},

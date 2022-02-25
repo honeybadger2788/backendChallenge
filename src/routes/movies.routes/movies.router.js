@@ -39,9 +39,12 @@ router.post('/', [
     .trim().isURL().withMessage('Ingresar una URL valida'),
     body('launch_date')
     .isDate().withMessage('Ingresar una fecha valida'),
-    body('rate').isInt({ min: 1, max: 5 }).withMessage('El puntaje debe ser del 1 al 5'),
-    body('id_genre').isInt().withMessage('El id debe ser un entero'),
-    body('characters').isArray().withMessage('Debe ingresar al menos un personaje')
+    body('rate')
+    .isInt({ min: 1, max: 5 }).withMessage('El puntaje debe ser del 1 al 5'),
+    body('id_genre')
+    .isInt().withMessage('El id debe ser un entero'),
+    body('characters')
+    .isArray().withMessage('Debe ingresar al menos un personaje')
 ] , createMovies)
 
 router.put('/:id_movie', [
@@ -60,7 +63,7 @@ router.put('/:id_movie', [
     .isInt({ min: 1, max: 5 }).withMessage('El puntaje debe ser del 1 al 5'),
     body('id_genre')
     .optional()
-    .isInt().withMessage('El id debe ser un entero') // no funca bien
+    .isInt().withMessage('El id debe ser un entero')
 ], updateMovies)
 
 router.delete('/:id_movie',[ idMovieValidation ], deleteMovies)
