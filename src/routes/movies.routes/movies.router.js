@@ -9,7 +9,7 @@ const updateMovies = require('../../controllers/movies.controller/updateMovies.c
 const deleteMovies = require('../../controllers/movies.controller/deleteMovies.controller')
 
 const idMovieValidation = param('id_movie')
-    .isInt().withMessage('El id debe ser un numero entero')
+.isInt().withMessage('El id debe ser un numero entero')
 
 router.get('/:id_movie/detail', [ idMovieValidation ], getMovieDetail)
 
@@ -33,20 +33,16 @@ router.get('/', [
 
 router.post('/', [
     body('title')
-    .notEmpty().withMessage('Debe ingresar un titulo')
-    .trim().isString().isLength({ min: 2, max: 45 }).withMessage('El titulo debe tener al menos 2 caracteres'),
+    .trim().isString().isLength({ min: 2, max: 45 })
+    .withMessage('El titulo debe tener al menos 2 caracteres'),
     body('image_url')
-    .trim().notEmpty().isURL().withMessage('Debe ingresar una imagen'),
+    .trim().isURL().withMessage('Ingresar una URL valida'),
     body('launch_date')
-    .notEmpty().withMessage('Debe ingresar una fecha de lanzamiento')
-    .isDate(),
-    body('rate')
-    .notEmpty().withMessage('Debe ingresar un puntaje')
-    .isInt({ min: 1, max: 5 }).withMessage('El puntaje debe ser del 1 al 5'),
-    body('id_genre')
-    .notEmpty().withMessage('Debe ingresar el id de un genero')
-    .isInt().withMessage('El id debe ser un entero')
-], createMovies)
+    .isDate().withMessage('Ingresar una fecha valida'),
+    body('rate').isInt({ min: 1, max: 5 }).withMessage('El puntaje debe ser del 1 al 5'),
+    body('id_genre').isInt().withMessage('El id debe ser un entero'),
+    body('characters').isArray().withMessage('Debe ingresar al menos un personaje')
+] , createMovies)
 
 router.put('/:id_movie', [
     idMovieValidation,
@@ -64,7 +60,7 @@ router.put('/:id_movie', [
     .isInt({ min: 1, max: 5 }).withMessage('El puntaje debe ser del 1 al 5'),
     body('id_genre')
     .optional()
-    .isInt().withMessage('El id debe ser un entero')
+    .isInt().withMessage('El id debe ser un entero') // no funca bien
 ], updateMovies)
 
 router.delete('/:id_movie',[ idMovieValidation ], deleteMovies)
