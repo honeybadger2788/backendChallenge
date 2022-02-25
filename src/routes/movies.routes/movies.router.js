@@ -9,7 +9,7 @@ const updateMovies = require('../../controllers/movies.controller/updateMovies.c
 const deleteMovies = require('../../controllers/movies.controller/deleteMovies.controller')
 
 const idMovieValidation = param('id_movie')
-.isInt().withMessage('El id debe ser un numero entero')
+    .isInt().withMessage('El id debe ser un numero entero')
 
 router.get('/:id_movie/detail', [ idMovieValidation ], getMovieDetail)
 
@@ -67,6 +67,6 @@ router.put('/:id_movie', [
     .isInt().withMessage('El id debe ser un entero')
 ], updateMovies)
 
-router.delete('/:id_movie', [ idMovieValidation ], deleteMovies)
+router.delete('/:id_movie',[ idMovieValidation ], deleteMovies)
 
 module.exports = router
