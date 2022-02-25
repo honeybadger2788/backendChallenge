@@ -1,22 +1,13 @@
 const db = require('../../database/models/index');
 
+const { validationResult } = require('express-validator');
+
 module.exports = async (req, res) => {
     const { id_character } = req.params
     const { name, image_url, age, weight, story } = req.body
 
-    if (!name &&
-        !image_url &&
-        !age &&
-        !weight &&
-        !story)
-        return res.json({
-            error: {
-                status: 400,
-                msg: 'Ingresar datos a actualizar'
-            }
-        })
-    
     try {
+        validationResult(req).throw()
         
         const result = await db.Character.update({
             name,
