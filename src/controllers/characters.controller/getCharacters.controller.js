@@ -1,5 +1,7 @@
 const db = require('../../database/models/index');
 
+const { validationResult } = require('express-validator')
+
 module.exports = async (req, res) => { 
     let filters = {}
     // permite armar la query de busqueda dinamica
@@ -16,6 +18,8 @@ module.exports = async (req, res) => {
     })
 
     try {
+        validationResult(req).throw()
+
         const result = await db.Character.findAll(query)
 
         return result.length !== 0 ?
