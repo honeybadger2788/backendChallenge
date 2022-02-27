@@ -40,7 +40,7 @@ module.exports = async (req,res) => {
             include: db.Character
         })
         
-        return movieCreated && result ?
+        return movieCreated[1] ?
             res.json({
                 status: 201,
                 data: result
@@ -48,7 +48,7 @@ module.exports = async (req,res) => {
             res.json({
                 error: {
                     status: 400,
-                    msg: 'No se pudo crear la pelicula'
+                    msg: 'Pelicula ya existente'
                 }
             })
 
