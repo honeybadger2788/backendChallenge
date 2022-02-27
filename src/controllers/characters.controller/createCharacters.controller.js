@@ -30,7 +30,7 @@ module.exports = async (req, res) => {
                     id_genre
                 }
             })
-            if(movieCreated[1])
+            if(movieCreated)
             await characterCreated[0].addMovie(movieCreated[0])
         }
         
@@ -39,7 +39,7 @@ module.exports = async (req, res) => {
             include: db.Movie
         })
         
-        return characterCreated && result ?
+        return characterCreated[1]?
         res.json({
             status: 201,
             data: result
@@ -47,7 +47,7 @@ module.exports = async (req, res) => {
         res.json({
             error: {
                 status: 400,
-                msg: 'No se pudo crear el personaje'
+                msg: 'Personaje ya existente'
             }
         })
         

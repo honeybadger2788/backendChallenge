@@ -31,7 +31,7 @@ module.exports = async (req,res) => {
                 }
             })
             
-            if(characterCreated[1])
+            if(characterCreated)
                 await movieCreated[0].addCharacter(characterCreated[0])
         }
         
