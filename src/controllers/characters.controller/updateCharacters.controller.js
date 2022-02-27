@@ -6,6 +6,18 @@ module.exports = async (req, res) => {
     const { id_character } = req.params
     const { name, image_url, age, weight, story } = req.body
 
+    if (!name &&
+        !image_url &&
+        !age &&
+        !weight &&
+        !story)
+        return res.json({
+            error: {
+                status: 400,
+                msg: 'Debe ingresar al menos un campo a actualizar'
+            }
+        })
+
     try {
         validationResult(req).throw()
         
