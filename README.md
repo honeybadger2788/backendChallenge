@@ -93,12 +93,16 @@ El término de búsqueda, filtro u ordenación se deberán especificar como par�
 Al registrarse en el sitio, el usuario deberá recibir un email de bienvenida. Es recomendable, la
 utilización de algún servicio de terceros como SendGrid.
 
+## Proyecto
+
+[Disney API](https://disney-backend-challenge.herokuapp.com/)
+
 ## Documentación
 
 Es deseable documentar los endpoints utilizando alguna herramienta como Postman o
 Swagger.
 
-[Link de la documentacion](https://documenter.getpostman.com/view/14968889/UVkqrZxu)
+[Documentacion](https://documenter.getpostman.com/view/14968889/UVkqrZxu)
 
 ## Tests
 

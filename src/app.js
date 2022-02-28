@@ -9,6 +9,10 @@ let port = process.env.PORT || 3000;
 
 app.use(express.json());
 
+app.use('/', (req, res) => {
+    res.send('Welcome to Disney API')
+});
+
 app.use('/auth', usersRouter);
 
 app.use('/movies', moviesRouter);
