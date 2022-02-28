@@ -21,24 +21,24 @@ de conocimiento actual.
 
 - Personaje: deberá tener,
 
--- Imagen.
--- Nombre.
--- Edad.
--- Peso.
--- Historia.
--- Películas o series asociadas.
+    - Imagen.
+    - Nombre.
+    - Edad.
+    - Peso.
+    - Historia.
+    - Películas o series asociadas.
 
 - Película o Serie: deberá tener,
--- Imagen.
--- Título.
--- Fecha de creación.
--- Calificación (del 1 al 5).
--- Personajes asociados.
+    - Imagen.
+    - Título.
+    - Fecha de creación.
+    - Calificación (del 1 al 5).
+    - Personajes asociados.
 
 - Género: deberá tener,
--- Nombre.
--- Imagen.
--- Películas o series asociadas.
+    - Nombre.
+    - Imagen.
+    - Películas o series asociadas.
 
 2. Autenticación de Usuarios
 Para realizar peticiones a los endpoints subsiguientes el usuario deberá contar con un token que
@@ -57,9 +57,11 @@ El endpoint deberá ser:
 
 4. Creación, Edición y Eliminación de Personajes (CRUD)
 Deberán existir las operaciones básicas de creación, edición y eliminación de personajes.
+
 5. Detalle de Personaje
 En el detalle deberán listarse todos los atributos del personaje, como así también sus películas o
 series relacionadas.
+
 6. Búsqueda de Personajes
 Deberá permitir buscar por nombre, y filtrar por edad, peso o películas/series en las que participó.
 Para especificar el término de búsqueda o filtros se deberán enviar como parámetros de query:
@@ -74,10 +76,12 @@ El endpoint deberá ser:
 - GET /movies
 
 8. Detalle de Película / Serie con sus personajes
-Devolverá todos los campos de la película o serie junto a los personajes asociados a la misma
+Devolverá todos los campos de la película o serie junto a los personajes asociados a la misma.
+
 9. Creación, Edición y Eliminación de Película / Serie
 Deberán existir las operaciones básicas de creación, edición y eliminación de películas o series.
-10.Búsqueda de Películas o Series
+
+10. Búsqueda de Películas o Series.
 Deberá permitir buscar por título, y filtrar por género. Además, permitir ordenar los resultados
 por fecha de creación de forma ascendiente o descendiente.
 El término de búsqueda, filtro u ordenación se deberán especificar como parámetros de query:
@@ -93,6 +97,8 @@ utilización de algún servicio de terceros como SendGrid.
 
 Es deseable documentar los endpoints utilizando alguna herramienta como Postman o
 Swagger.
+
+[Link de la documentacion](https://documenter.getpostman.com/view/14968889/UVkqrZxu)
 
 ## Tests
 
