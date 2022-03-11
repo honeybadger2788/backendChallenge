@@ -2,8 +2,10 @@ const db = require('../../database/models/index')
 const generateApiKey = require('generate-api-key')
 const sgMail = require('@sendgrid/mail')
 const { validationResult } = require('express-validator')
+
 const MY_EMAIL = process.env.MY_EMAIL
 const SENDGRID_API_KEY = process.env.SENDGRID_API_KEY
+
 sgMail.setApiKey(SENDGRID_API_KEY)
 
 module.exports = async (req, res) => {
@@ -34,7 +36,7 @@ module.exports = async (req, res) => {
             text: 'Hi! Welcome to my Disney Movies API. Here is your access token: ' + result[0].token
                 + ' Please, doesnt share it with anyone',
             html: '<p>Hi! Welcome to my Disney Movies API. Here is your access token: <strong>' + result[0].token
-            + '</strong> Please, doesnt share it with anyone</p>',
+            + '</strong></p> <p>Please, doesnt share it with anyone</p>',
         }
         
         if (!result[1])
@@ -57,14 +59,6 @@ module.exports = async (req, res) => {
                 }
             })
         }
-        /* return result[1] ?
-        sgMail.send(msg) :
-        res.json({
-            error: {
-                status: 400,
-                msg: 'Usuario ya registrado'
-            }
-        }) */
         
     } catch (e) {
         

@@ -1,7 +1,6 @@
 const express = require('express');
 const app = express();
-/* const sgMail = require('@sendgrid/mail')
-sgMail.setApiKey(process.env.SENDGRID_API_KEY) */
+require('dotenv').config()
 
 const usersRouter = require('./routes/users.routes/users.router')
 const moviesRouter = require('./routes/movies.routes/movies.router')
