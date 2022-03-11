@@ -1,5 +1,7 @@
 const express = require('express');
 const app = express();
+/* const sgMail = require('@sendgrid/mail')
+sgMail.setApiKey(process.env.SENDGRID_API_KEY) */
 
 const usersRouter = require('./routes/users.routes/users.router')
 const moviesRouter = require('./routes/movies.routes/movies.router')
@@ -9,15 +11,16 @@ let port = process.env.PORT || 3000;
 
 app.use(express.json());
 
-app.use('/', (req, res) => {
-    res.send('Welcome to Disney API')
-});
 
 app.use('/auth', usersRouter);
 
 app.use('/movies', moviesRouter);
 
 app.use('/characters', charactersRouter);
+
+app.use('/', (req, res) => {
+    res.send('Welcome to Disney API')
+});
 
 app.listen(port, function() {
     console.log(`El servidor está corriendo en el puerto: ${port}`)
