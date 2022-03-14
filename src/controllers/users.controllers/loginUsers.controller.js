@@ -25,9 +25,11 @@ module.exports = async (req, res) => {
             where: { username } 
         })
         
-        if ( result && bcrypt.compareSync(password, result.dataValues.password )) {
-            const accessToken = jwt.sign(username, PRIVATE_KEY,/*  { expiresIn: '1h' } */)
-            console.log( 'accessToken ', accessToken )
+        if (result && bcrypt.compareSync(password, result.dataValues.password)) {
+            const user = {
+                username
+            }
+            const accessToken = jwt.sign(user, PRIVATE_KEY, { expiresIn: '1h' })
             res.json({
                 status: 200,
                 accessToken
