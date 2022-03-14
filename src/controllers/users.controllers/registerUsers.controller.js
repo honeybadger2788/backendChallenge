@@ -22,7 +22,6 @@ module.exports = async (req, res) => {
         })
     
     try {
-        const user = { name: username }
         
         const result = await db.User.findOrCreate({
             where: { username },
