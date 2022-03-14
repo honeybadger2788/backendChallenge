@@ -7,7 +7,7 @@ const loginUsers = require('../../controllers/users.controllers/loginUsers.contr
 
 router.post('/register',[
     body('username')
-        .isEmail().withMessage('El usuario debe ser un email'),
+        .isEmail().normalizeEmail().withMessage('El usuario debe ser un email'),
     body('password')
         .isLength({ min: 8, max: 16 }).withMessage('La contraseña debe contener entre 8 y 16 caracteres')
 ], registerUsers);

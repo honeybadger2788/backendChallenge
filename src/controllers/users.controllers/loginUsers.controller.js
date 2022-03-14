@@ -7,19 +7,11 @@ const { validationResult } = require('express-validator');
 const JWT_PRIVATE_KEY = process.env.JWT_PRIVATE_KEY
 
 module.exports = async (req, res) => {
-    const errors = validationResult(req) 
     
     const { username, password } = req.body
     
-    if (!errors.isEmpty())
-    return res.json({
-        errors: {
-            status: 400,
-            errors: errors.array()
-        }
-    })
-    
     try {
+        validationResult(req).throw()
         
         const result = await db.User.findOne({
             where: { username } 
