@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken')
-const PRIVATE_KEY = process.env.PRIVATE_KEY
+const JWT_PRIVATE_KEY = process.env.JWT_PRIVATE_KEY
 
 module.exports = (req, res, next) => {
     const authHeader = req.headers['authorization']
@@ -11,7 +11,7 @@ module.exports = (req, res, next) => {
                 msg: 'Unauthorized access'
             }
         })
-    jwt.verify(authHeader, PRIVATE_KEY, err => {
+    jwt.verify(authHeader, JWT_PRIVATE_KEY, err => {
         err ? 
          res.json({
             error: {

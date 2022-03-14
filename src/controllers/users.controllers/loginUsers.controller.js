@@ -4,7 +4,7 @@ const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const { validationResult } = require('express-validator');
 
-const PRIVATE_KEY = process.env.PRIVATE_KEY
+const JWT_PRIVATE_KEY = process.env.JWT_PRIVATE_KEY
 
 module.exports = async (req, res) => {
     const errors = validationResult(req) 
@@ -29,7 +29,7 @@ module.exports = async (req, res) => {
             const user = {
                 username
             }
-            const accessToken = jwt.sign(user, PRIVATE_KEY, { expiresIn: '1h' })
+            const accessToken = jwt.sign(user, JWT_PRIVATE_KEY, { expiresIn: '1h' })
             res.json({
                 status: 200,
                 accessToken
