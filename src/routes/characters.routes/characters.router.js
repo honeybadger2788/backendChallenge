@@ -6,14 +6,15 @@ const getCharacters = require('../../controllers/characters.controller/getCharac
 const getCharacterDetail = require('../../controllers/characters.controller/getCharacterDetail.controller')
 const createCharacters = require('../../controllers/characters.controller/createCharacters.controller')
 const updateCharacters = require('../../controllers/characters.controller/updateCharacters.controller')
-const deleteCharacters = require('../../controllers/characters.controller/deleteCharacters.controller')
+const deleteCharacters = require('../../controllers/characters.controller/deleteCharacters.controller');
+const authMiddleware = require('../../middlewares/authMiddleware');
 
 const idCharacterValidation = param('id_character')
 .isInt().withMessage('El id debe ser un numero entero')
 
-router.get('/:id_character/detail', [idCharacterValidation], getCharacterDetail)
+router.get('/:id_character/detail', authMiddleware, [idCharacterValidation], getCharacterDetail)
 
-router.get('/', [
+router.get('/', authMiddleware, [
     query('name')
     .optional()
     .trim().isString()
@@ -26,7 +27,7 @@ router.get('/', [
     .isInt().withMessage('El peso debe ser un entero')
 ], getCharacters)
 
-router.post('/', [
+router.post('/', authMiddleware, [
     body('name')
     .trim().isString()
     .isLength({ min: 2, max: 45 }).withMessage('El nombre del personaje debe tener al menos 2 caracteres'),
@@ -43,7 +44,7 @@ router.post('/', [
     .isArray({ min:1 }).withMessage('Debe ingresar al menos una pelicula')
 ], createCharacters)
 
-router.put('/:id_character', [
+router.put('/:id_character', authMiddleware, [
     idCharacterValidation,
     body('name')
     .optional()
@@ -64,6 +65,6 @@ router.put('/:id_character', [
     .isLength({ min: 2, max: 280 }).withMessage('La historia debe tener menos de 280 caracteres')
 ], updateCharacters)
 
-router.delete('/:id_character',[ idCharacterValidation ], deleteCharacters)
+router.delete('/:id_character', authMiddleware, [ idCharacterValidation ], deleteCharacters)
 
 module.exports = router

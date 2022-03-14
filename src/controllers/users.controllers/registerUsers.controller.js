@@ -50,12 +50,12 @@ module.exports = async (req, res) => {
             const success = await sgMail.send(msg)
             return success ? res.json({
                 status: 200,
-                msg: 'Email sent'
+                msg: 'Email enviado'
             }) :
             res.json({
                 error: {
                     status: 400,
-                    msg: 'Something went wrong'
+                    msg: 'Algo anduvo mal'
                 }
             })
         }
