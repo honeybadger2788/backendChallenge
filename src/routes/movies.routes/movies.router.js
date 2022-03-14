@@ -2,18 +2,20 @@ const { Router } = require('express');
 const router = Router();
 const { param, body, query } = require('express-validator');
 
+const authMiddleware = require('../../middlewares/authMiddleware');
+
 const getMovies = require('../../controllers/movies.controller/getMovies.controller')
 const getMovieDetail = require ('../../controllers/movies.controller/getMovieDetail.controller')
 const createMovies = require('../../controllers/movies.controller/createMovies.controller')
 const updateMovies = require('../../controllers/movies.controller/updateMovies.controller')
-const deleteMovies = require('../../controllers/movies.controller/deleteMovies.controller')
+const deleteMovies = require('../../controllers/movies.controller/deleteMovies.controller');
 
 const idMovieValidation = param('id_movie')
 .isInt().withMessage('El id debe ser un numero entero')
 
-router.get('/:id_movie/detail', [ idMovieValidation ], getMovieDetail)
+router.get('/:id_movie/detail', authMiddleware, [ idMovieValidation ], getMovieDetail)
 
-router.get('/', [
+router.get('/', authMiddleware, [
     query('title')
     .optional()
     .trim().isString().isLength({ min: 2, max: 45 }).withMessage('El titulo debe tener al menos 2 caracteres'),
@@ -31,7 +33,7 @@ router.get('/', [
     .isIn(['desc', 'asc'])
 ], getMovies)
 
-router.post('/', [
+router.post('/', authMiddleware, [
     body('title')
     .trim().isString().isLength({ min: 2, max: 45 })
     .withMessage('El titulo debe tener al menos 2 caracteres'),
@@ -47,7 +49,7 @@ router.post('/', [
     .isArray({ min:1 }).withMessage('Debe ingresar al menos un personaje')
 ] , createMovies)
 
-router.put('/:id_movie', [
+router.put('/:id_movie', authMiddleware, [
     idMovieValidation,
     body('title')
     .optional()
@@ -66,6 +68,6 @@ router.put('/:id_movie', [
     .isInt().withMessage('El id debe ser un entero')
 ], updateMovies)
 
-router.delete('/:id_movie',[ idMovieValidation ], deleteMovies)
+router.delete('/:id_movie', authMiddleware, [ idMovieValidation ], deleteMovies)
 
 module.exports = router
