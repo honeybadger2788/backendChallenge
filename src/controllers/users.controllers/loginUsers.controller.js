@@ -1,11 +1,12 @@
 const db = require('../../database/models/index');
 
+const bcrypt = require('bcrypt')
 const { validationResult } = require('express-validator');
 
 module.exports = async (req, res) => {
     const errors = validationResult(req) 
     
-    const { username, token } = req.body
+    const { username, password } = req.body
 
     if (!errors.isEmpty())
         return res.json({
@@ -20,8 +21,8 @@ module.exports = async (req, res) => {
         const result = await db.User.findOne({
             where: { username } 
         })
-        
-        return result && result.token === token ?
+
+        return result && bcrypt.compareSync(password,result.dataValues.password) ?
         res.json({
             status: 200,
             msg: 'Ok'

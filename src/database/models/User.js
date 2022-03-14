@@ -12,8 +12,8 @@ module.exports = function(sequelize, dataTypes){
             type: dataTypes.STRING(45),
             notNull: true
         },
-        token: {
-            type: dataTypes.STRING(45),
+        password: {
+            type: dataTypes.STRING(120),
             notNull: true
         },  
     }

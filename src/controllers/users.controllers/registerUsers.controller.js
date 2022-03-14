@@ -1,16 +1,17 @@
 const db = require('../../database/models/index')
-const generateApiKey = require('generate-api-key')
+const bcrypt = require('bcrypt')
 const sgMail = require('@sendgrid/mail')
 const { validationResult } = require('express-validator')
 
-const MY_EMAIL = process.env.MY_EMAIL
+
 const SENDGRID_API_KEY = process.env.SENDGRID_API_KEY
+const MY_EMAIL = process.env.MY_EMAIL
 
 sgMail.setApiKey(SENDGRID_API_KEY)
 
 module.exports = async (req, res) => {
     const errors = validationResult(req)    
-    const { username } = req.body
+    const { username, password } = req.body
     
     if (!errors.isEmpty())
         return res.json({
@@ -21,22 +22,21 @@ module.exports = async (req, res) => {
         })
     
     try {
+        const user = { name: username }
         
         const result = await db.User.findOrCreate({
             where: { username },
             defaults: { 
-                token: generateApiKey({ method: 'string', length: 45 })
+                password: bcrypt.hashSync(password,12)
             }
         })
 
         const msg = {
             to: username, 
             from: MY_EMAIL, 
-            subject: 'Welcome to Disney Movies API - Here is your access token',
-            text: 'Hi! Welcome to my Disney Movies API. Here is your access token: ' + result[0].token
-                + ' Please, doesnt share it with anyone',
-            html: '<p>Hi! Welcome to my Disney Movies API. Here is your access token: <strong>' + result[0].token
-            + '</strong></p> <p>Please, doesnt share it with anyone</p>',
+            subject: 'Welcome to Disney Movies API',
+            text: 'Hi! Welcome to my Disney Movies API. Click here to access the APIs Documentation.',
+            html: '<p>Hi! Welcome to my Disney Movies API.</p> <a href="https://documenter.getpostman.com/view/14968889/UVkqrZxu">Click here to access the APIs Documentation</a>',
         }
         
         if (!result[1])

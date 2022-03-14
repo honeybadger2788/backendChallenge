@@ -8,13 +8,13 @@ const loginUsers = require('../../controllers/users.controllers/loginUsers.contr
 router.post('/register', [
     check('username')
         .isEmail().withMessage('El usuario debe ser un email')
-],registerUsers);
+], registerUsers);
+
 router.post('/login',[
     check('username')
         .isEmail().withMessage('El usuario debe ser un email'),
-    check('token')
-        .notEmpty().withMessage('Debe ingresar el token de seguridad')
-        .isLength(45)
+    check('password')
+        .notEmpty().withMessage('Debe su contraseña')
 ], loginUsers);
 
 module.exports = router

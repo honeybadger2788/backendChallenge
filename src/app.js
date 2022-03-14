@@ -18,7 +18,7 @@ app.use('/movies', moviesRouter);
 app.use('/characters', charactersRouter);
 
 app.use('/', (req, res) => {
-    res.send('Welcome to Disney API')
+    res.send('Welcome to Disney Movies API')
 });
 
 app.listen(port, function() {
