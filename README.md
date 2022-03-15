@@ -1,113 +1,79 @@
-# CHALLENGE BACKEND - NodeJs
-🚀
+![banner](banner.png)
 
-## Objetivo
+# DISNEY MOVIES API 🚀
 
-Desarrollar una API para explorar el mundo de Disney, la cual permitirá conocer y modificar los
-personajes que lo componen y entender en qué películas estos participaron. Por otro lado, deberá
-exponer la información para que cualquier frontend pueda consumirla.
-👉 Utilizar NodeJs y Express.
-👉 No es necesario armar el Frontend.
-👉 Las rutas deberán seguir el patrón REST.
-👉 Utilizar la librería Sequelize.
-⚠️ ¡No es indispensable hacer todo!
-Mientras más completes, mayor puntaje obtendrás, pero puedes enviar la app hasta el estadío que la
-tengas en base a tu conocimiento actual. Recuerda que el objetivo del challenge es entender tu nivel
-de conocimiento actual.
+[Link to Disney API](https://disney-backend-challenge.herokuapp.com/)
 
-## Requerimientos técnicos
+Proyecto desarrollado en el marco de Alkemy Campus Challenge.
+El objetivo del mismo fue desarrollar una API que devuelva las peliculas/series de Disney como así también sus personajes.
 
-1. Modelado de Base de Datos
+Para llevarlo a cabo se utilizó **NodeJS**, **Express** y se diagramó la base de datos en **MySQL**. Los campos fueron validados con **Express-validator** y el token de acceso es gestionado a través de **JWT**.
 
-- Personaje: deberá tener,
+Si bien no es el primer CRUD que he creado, este proyecto presentó un nuevo desafío para mi ya que me propuse hacerlo mejorando mi código tanto en la legibilidad del mismo como en la escalabilidad. 
+También busqué aprovechar lo más posible la modularización del código para así hacerlo más eficiente.
 
-    - Imagen.
-    - Nombre.
-    - Edad.
-    - Peso.
-    - Historia.
-    - Películas o series asociadas.
+Utilizar tacnologías como **Sendgrid** y JWT fue totalmente nuevo para mi. Y si bien sabía crear tablas pivot, nunca había tenido la oportunidad de implementarlas.
 
-- Película o Serie: deberá tener,
-    - Imagen.
-    - Título.
-    - Fecha de creación.
-    - Calificación (del 1 al 5).
-    - Personajes asociados.
+# Preview
 
-- Género: deberá tener,
-    - Nombre.
-    - Imagen.
-    - Películas o series asociadas.
+![preview](preview.png)
 
-2. Autenticación de Usuarios
-Para realizar peticiones a los endpoints subsiguientes el usuario deberá contar con un token que
-obtendrá al autenticarse. Para ello, deberán desarrollarse los endpoints de registro y login, que
-permitan obtener el token.
-Los endpoints encargados de la autenticación deberán ser:
-- /auth/login
-- /auth/register
+# Tabla de contenidos
 
-3. Listado de Personajes
-El listado deberá mostrar:
-- Imagen.
-- Nombre.
-El endpoint deberá ser:
-- /characters
+- [Disney Movies API](#disney-movies-api-🚀)
+- [Preview](#preview)
+- [Tabla de contenidos](#tabla-de-contenidos)
+- [Instalacion](#instalacion)
+- [Uso](#uso)
+- [Documentacion](#documentacion)
+- [Footer](#footer)
 
-4. Creación, Edición y Eliminación de Personajes (CRUD)
-Deberán existir las operaciones básicas de creación, edición y eliminación de personajes.
+# Instalacion
+[(Subir)](#tabla-de-contenidos)
 
-5. Detalle de Personaje
-En el detalle deberán listarse todos los atributos del personaje, como así también sus películas o
-series relacionadas.
+Si quieres bajar este proyecto a tu dispositivo, puedes seguir los siguientes pasos. Sino, el mismo esta subido a Heroku para que puedas acceder a el sin necesidad de instalar nada.
 
-6. Búsqueda de Personajes
-Deberá permitir buscar por nombre, y filtrar por edad, peso o películas/series en las que participó.
-Para especificar el término de búsqueda o filtros se deberán enviar como parámetros de query:
+`$ git init`
 
-- GET /characters?name=nombre
-- GET /characters?age=edad
-- GET /characters?movies=idMovie
+`$ git clone https://github.com/honeybadger2788/backendChallenge.git`
 
-7. Listado de Películas
-Deberá mostrar solamente los campos imagen, título y fecha de creación.
-El endpoint deberá ser:
-- GET /movies
+`$ npm i`
 
-8. Detalle de Película / Serie con sus personajes
-Devolverá todos los campos de la película o serie junto a los personajes asociados a la misma.
+`$ npm start`
 
-9. Creación, Edición y Eliminación de Película / Serie
-Deberán existir las operaciones básicas de creación, edición y eliminación de películas o series.
+**Recuerda configurar las variables de entorno tal como se muestra en el ***env.example*****
 
-10. Búsqueda de Películas o Series.
-Deberá permitir buscar por título, y filtrar por género. Además, permitir ordenar los resultados
-por fecha de creación de forma ascendiente o descendiente.
-El término de búsqueda, filtro u ordenación se deberán especificar como parámetros de query:
-- GET /movies?name=nombre
-- GET /movies?genre=idGenero
-- GET /movies?order=ASC | DESC
+# Uso
 
-11. Envío de emails
-Al registrarse en el sitio, el usuario deberá recibir un email de bienvenida. Es recomendable, la
-utilización de algún servicio de terceros como SendGrid.
+Lo primero que debes hacer para comenzar a utilizar esta API es registrarte a traves del siguiente link, utilizando **Postman** o alguna herramienta similar:
 
-## Proyecto
+👉 <https://disney-backend-challenge.herokuapp.com/auth/register>
 
-[Disney API](https://disney-backend-challenge.herokuapp.com/)
+Se te pedira un mail y una contraseña de entre 8 y 16 caracteres.
 
-## Documentación
+Una vez registrado, podras loguearte para obtener tu token de acceso.
 
-Es deseable documentar los endpoints utilizando alguna herramienta como Postman o
-Swagger.
+👉 <https://disney-backend-challenge.herokuapp.com/auth/login>
 
-[Documentacion](https://documenter.getpostman.com/view/14968889/UVkqrZxu)
+No te olvides de copiar tu token! Este tendra una validez de 1 hora pero no te preocupes. Una vez expirado, podras volver a loguearte para obtener uno nuevo.
 
-## Tests
+![think](https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fmedia.tenor.com%2Fimages%2F1b9e5970eabe47cdbc9448d8b49e7e13%2Ftenor.gif&f=1&nofb=1)
 
-De forma opcional, se podrán agregar tests de los diferentes endpoints de la APP, verificando
-posibles escenarios de error:
-- Campos faltantes o con un formato inválido en BODY de las peticiones
-- Acceso a recursos inexistentes en endpoints de detalle
-Los tests pueden realizarse utilizando Mocha + Chai.
+# Documentacion
+
+[(Subir)](#tabla-de-contenidos)
+
+La documentacion fue realizada con Postman. En el link de abajo tendras acceso a la misma y alli encontraras tanto los endponints como los campos necesarios para utilizarla.
+
+[📑 Link to Documentation](https://documenter.getpostman.com/view/14968889/UVkqrZxu)
+
+# Footer
+
+[(Subir)](#tabla-de-contenidos)
+
+Gracias por llegar hasta aqui! Si quieres hacerme alguna recomendacion o simplemente contactarte conmigo, puedes hacerlo por cualquiera de estos medios:
+
+- [CV online](https://honeybadger2788.github.io/newCV/)
+- [Twitter](https://twitter.com/JGirlify)
+- [LinkedIn](https://www.linkedin.com/in/noeliabcarosella/)
+- [Mail](noe.carosella@gmail.com)
