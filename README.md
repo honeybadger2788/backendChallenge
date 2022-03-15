@@ -1,4 +1,4 @@
-![banner](banner.png)
+![banner](./banner.png)
 
 # DISNEY MOVIES API 🚀
 
@@ -16,7 +16,7 @@ Utilizar tacnologías como **Sendgrid** y JWT fue totalmente nuevo para mi. Y si
 
 # Preview
 
-![preview](preview.png)
+![preview](./preview.png)
 
 # Tabla de contenidos
 
