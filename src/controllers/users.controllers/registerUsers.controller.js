@@ -31,31 +31,27 @@ module.exports = async (req, res) => {
         }
         
         if (!result[1])
-            return res.json({
+            return res.status(400).json({
                 error: {
-                    status: 400,
+                    status: res.statusCode,
                     msg: 'Usuario ya registrado'
                 }
             })
         else {
-            const success = await sgMail.send(msg)
-            return success ? res.json({
-                status: 200,
+            const emailSent = await sgMail.send(msg)
+
+            if(emailSent)
+            return res.status(200).json({
+                status: res.statusCode,
                 msg: 'Email enviado'
-            }) :
-            res.json({
-                error: {
-                    status: 400,
-                    msg: 'Algo anduvo mal'
-                }
-            })
+            }) 
         }
         
     } catch (e) {
         
-        return res.json({
+        return res.status(500).json({
             error: {
-                status: 500,
+                status: res.statusCode,
                 msg: e
             }
         })

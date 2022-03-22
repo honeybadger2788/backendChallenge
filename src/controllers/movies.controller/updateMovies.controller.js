@@ -11,9 +11,9 @@ module.exports = async (req, res) => {
         !launch_date &&
         !rate &&
         !id_genre)
-        return res.json({
+        return res.status(400).json({
             error: {                
-                status: 400,
+                status: res.statusCode,
                 msg: 'Debe ingresar al menos un campo a actualizar'
         }
     })
@@ -33,22 +33,22 @@ module.exports = async (req, res) => {
         })
         
         return result[0] === 1 ?
-        res.json({
-            status: 200,
+        res.status(200).json({
+            status: res.statusCode,
             msg: 'Pelicula actualizada exitosamente'
         }) :
-            res.json({
+            res.status(404).json({
                 error: {                
-                    status: 404,
+                    status: res.statusCode,
                     msg: 'Pelicula no encontrada'
             }
         })
         
     } catch (e) {
 
-        return res.json({
+        return res.status(500).json({
             error: {
-                status: 500,
+                status: res.statusCode,
                 msg: e
             }
         })

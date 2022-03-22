@@ -14,22 +14,22 @@ module.exports = async (req,res) => {
         })
 
         return result ?
-            res.json({
-                status: 200,
+            res.status(200).json({
+                status: res.statusCode,
                 msg: 'Pelicula eliminada exitosamente'
             }) :
-            res.json({
+            res.status(404).json({
                 error: {
-                    status: 404,
+                    status: res.statusCode,
                     msg: 'Pelicula no encontrada'
                 }
             })
         
     } catch (e) {
 
-        res.json({
+        res.status(500).json({
             error: {
-                status: 500,
+                status: res.statusCode,
                 msg: e
             }
         })

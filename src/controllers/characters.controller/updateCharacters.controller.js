@@ -11,9 +11,9 @@ module.exports = async (req, res) => {
         !age &&
         !weight &&
         !story)
-        return res.json({
+        return res.status(400).json({
             error: {
-                status: 400,
+                status: res.statusCode,
                 msg: 'Debe ingresar al menos un campo a actualizar'
             }
         })
@@ -33,22 +33,22 @@ module.exports = async (req, res) => {
         })
         
         return result[0] === 1 ?
-        res.json({
-            status: 200,
+        res.status(200).json({
+            status: res.statusCode,
             msg: 'Personaje actualizado exitosamente'
         }) :
-        res.json({
+        res.status(404).json({
             error: {
-                status: 404,
+                status: res.statusCode,
                 msg: 'Personaje no encontrado'
             }
         })
         
     } catch (e) {
 
-        res.json({
+        res.status(500).json({
             error: {
-                status: 500,
+                status: res.statusCode,
                 msg: e
             }
         })

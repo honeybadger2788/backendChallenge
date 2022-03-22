@@ -2,7 +2,7 @@ const db = require('../../database/models/index');
 
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
-const { validationResult } = require('express-validator');
+const { validationResult } = require('express-validator')
 
 const JWT_PRIVATE_KEY = process.env.JWT_PRIVATE_KEY
 
@@ -22,23 +22,23 @@ module.exports = async (req, res) => {
                 username
             }
             const accessToken = jwt.sign(user, JWT_PRIVATE_KEY, { expiresIn: '1h' })
-            res.json({
-                status: 200,
+            res.status(200).json({
+                status: res.statusCode,
                 accessToken
             })
         }
         else 
-        res.json({
+        res.status(401).json({
             error: {
-                status: 401,
+                status: res.statusCode,
                 msg: 'Usuario y/o password incorrecto'
             }
         })
         
     } catch(e) {
-        return res.json({
+        return res.status(500).json({
             error: {
-                status: 500,
+                status: res.statusCode,
                 msg: e
             }
         })

@@ -23,22 +23,22 @@ module.exports = async (req, res) => {
         const result = await db.Character.findAll(query)
 
         return result.length !== 0 ?
-            res.json({
-                status: 200,
+            res.status(200).json({
+                status: res.statusCode,
                 data: result
             }) : 
-            res.json({
+            res.status(404).json({
                 error: {
-                    status: 404,
+                    status: res.statusCode,
                     msg: 'Personaje/s no encontrado/s'
                 }
             })
         
     } catch (e) {
         
-        res.json({
+        res.status(500).json({
             error: {
-                status: 500,
+                status: res.statusCode,
                 msg: e
             } 
         })

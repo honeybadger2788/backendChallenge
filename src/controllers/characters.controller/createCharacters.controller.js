@@ -40,22 +40,22 @@ module.exports = async (req, res) => {
         })
         
         return characterCreated[1]?
-        res.json({
-            status: 201,
+        res.status(201).json({
+            status: res.statusCode,
             data: result
         }) :
-        res.json({
+        res.status(400).json({
             error: {
-                status: 400,
+                status: res.statusCode,
                 msg: 'Personaje ya existente'
             }
         })
         
     } catch (e) {
         
-        res.json({
+        res.status(500).json({
             error: {
-                status: 500,
+                status: res.statusCode,
                 msg: e
             }
         })
