@@ -31,6 +31,7 @@ const testMovie = {
     ]
 }
 
+const tokenExpirated = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InBydWViYUBob3RtYWlsLmNvbSIsImlhdCI6MTY0NzMwMjg5OSwiZXhwIjoxNjQ3MzA2NDk5fQ.uRELwZMeFEpmfCNc4cuM98XKfolQikLzDkZo7NrUTKM'
 
 describe('Create movies: ', () => {
     beforeEach(done => {
@@ -111,25 +112,37 @@ describe('Create movies with errors: ', () => {
             where: { username: testUser.username },
             force: true
         });
-        /* const removeMovie = await db.Movie.destroy({
-            where: { title: testMovie.title },
-            force: true
-        });
-        const removeCharacter = await db.Character.destroy({
-            where: { name: testMovie.characters[0].name },
-            force: true
-        }); */
-        return removeUser /* && removeMovie && removeCharacter */
+        return removeUser
     });
 
     it('should receive an error', done => {
         chai.request(url)
         .post('/movies')
         .set('Authorization','Bearer '+accessToken)
-        .send({})
+        .send({}) // no movie sent
         .end( function(err,res){
             expect(res).to.have.status(500);
             done();
         });
     });
 });
+
+describe('Create movies with authentication error  : ', () => {
+    it('should receive an authentication error', done => {
+        chai.request(url)
+        .post('/movies')
+        .end( function(err,res){
+            expect(res).to.have.status(401);
+            done();
+        });
+    });
+    it('should receive an expiration token error', done => {
+        chai.request(url)
+        .post('/movies')
+        .set('Authorization','Bearer '+tokenExpirated)
+        .end( function(err,res){
+            expect(res).to.have.status(403);
+            done();
+        });
+    });
+})
