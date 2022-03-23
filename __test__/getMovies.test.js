@@ -28,18 +28,18 @@ describe('Get movies: ', () => {
             done();
         });
     });
-
+    
     beforeEach(done => {
         chai.request(url)
         .post('/auth/login')
         .send(testUser)
-            .end(function (err, res) {
+        .end(function (err, res) {
             accessToken = res.body.accessToken
             expect(res).to.have.status(200);
             done();
         });
     });
-
+    
     afterEach( async () => {
         // Luego de cada test, elimina el usuario creado
         const result = await db.User.destroy({
@@ -48,12 +48,11 @@ describe('Get movies: ', () => {
         });
         return result
     });
-
+    
     it('should get all movies', done => {
         chai.request(url)
         .get('/movies')
         .set('Authorization','Bearer '+accessToken)
-        .send(testUser)
         .end( function(err,res){
             expect(res).to.have.status(200);
             done();
@@ -65,7 +64,6 @@ describe('Get movies with authentication error  : ', () => {
     it('should receive an authentication error', done => {
         chai.request(url)
         .get('/movies')
-        .send(testUser)
         .end( function(err,res){
             expect(res).to.have.status(401);
             done();
@@ -75,7 +73,6 @@ describe('Get movies with authentication error  : ', () => {
         chai.request(url)
         .get('/movies')
         .set('Authorization','Bearer '+tokenExpirated)
-        .send(testUser)
         .end( function(err,res){
             expect(res).to.have.status(403);
             done();
