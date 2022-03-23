@@ -1,3 +1,4 @@
+require('dotenv').config()
 const chai = require('chai');
 const chaiHttp = require('chai-http');
 const expect = require('chai').expect;
@@ -6,7 +7,7 @@ const db = require('../src/database/models/index')
 const PORT = process.env.PORT || 3000;
 
 chai.use(chaiHttp);
-const url = `http://localhost:4000`;
+const url = `http://localhost:${PORT}`;
 
 const testUser = {
     username: 'test@test.com',
