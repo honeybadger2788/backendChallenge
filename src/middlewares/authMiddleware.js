@@ -6,17 +6,17 @@ module.exports = (req, res, next) => {
     const token = authHeader && authHeader.split(' ')[1]
 
     if (!token)
-        return res.json({
+        return res.status(401).json({
             error: {
-                status: 401,
+                status: res.statusCode,
                 msg: 'Unauthorized access'
             }
         })
     jwt.verify(token, JWT_PRIVATE_KEY, err => {
         err ? 
-         res.json({
+         res.status(403).json({
             error: {
-                status: 403,
+                status: res.statusCode,
                 msg: 'Token has expired'
             }
          }) :
