@@ -6,7 +6,7 @@ const db = require('../src/database/models/index')
 const PORT = process.env.PORT || 3000;
 
 chai.use(chaiHttp);
-const url = `http://localhost:${PORT}`;
+const url = `http://localhost:4000`;
 
 const testUser = {
     username: 'test@test.com',
