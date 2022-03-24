@@ -31,17 +31,16 @@ const testMovie = {
     ]
 }
 
-const testMovieError = {
-    title: " ",
-    image_url: "https://www.testurl.com/",
-    launch_date: "22-11-2017",
-    rate: "5",
-    id_genre: "3",
+const updatedMovie = {
+    title: "Update Title",
+    image_url: "https://www.testurl.com/newImage",
+    launch_date: "2021-11-22",
 }
 
-const tokenExpirated = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InBydWViYUBob3RtYWlsLmNvbSIsImlhdCI6MTY0NzMwMjg5OSwiZXhwIjoxNjQ3MzA2NDk5fQ.uRELwZMeFEpmfCNc4cuM98XKfolQikLzDkZo7NrUTKM'
+var accessToken
+var id_movie
 
-describe('Create movies: ', () => {
+describe('Update movie: ', () => {
     beforeEach(done => {
         chai.request(url)
         .post('/auth/register')
@@ -51,7 +50,7 @@ describe('Create movies: ', () => {
             done();
         });
     });
-
+    
     beforeEach(done => {
         chai.request(url)
         .post('/auth/login')
@@ -62,7 +61,20 @@ describe('Create movies: ', () => {
             done();
         });
     });
-
+    /* creamos una nueva pelicula a los efectos de asegurarnos que el elemento que se esta testeando, existe */
+    beforeEach(done => {
+        chai.request(url)
+        .post('/movies')
+        .set('Authorization','Bearer '+accessToken)
+        .send(testMovie)
+        .end(function (err, res) {
+            /* guardamos el id en una variable para poder utilizarlo en el test de detalle */
+            id_movie = res.body.data.id_movie
+            expect(res).to.have.status(201);
+            done();
+        });
+    });
+    
     afterEach( async () => {
         // Luego de cada test, elimina los datos creados
         const removeUser = await db.User.destroy({
@@ -79,20 +91,23 @@ describe('Create movies: ', () => {
         });
         return removeUser && removeMovie && removeCharacter
     });
-
-    it('should create a movie', done => {
+    
+    it('should update a movie', done => {
         chai.request(url)
-        .post('/movies')
-        .set('Authorization','Bearer '+accessToken)
-        .send(testMovie)
-        .end( function(err,res){
-            expect(res).to.have.status(201);
+        .put(`/movies/${id_movie}`)
+        .set('Authorization', 'Bearer ' + accessToken)
+        .send(updatedMovie)
+        .end(function (err, res) {
+            expect(res.body).to.have.property('msg').to.be.equal('Pelicula actualizada exitosamente')
+            expect(res).to.have.status(200);
             done();
         });
     });
 });
 
-describe('Create movies with errors: ', () => {
+/* ---------- Test Error: No Body ----------*/
+
+describe('Update movie with error: ', () => {
     beforeEach(done => {
         chai.request(url)
         .post('/auth/register')
@@ -102,55 +117,60 @@ describe('Create movies with errors: ', () => {
             done();
         });
     });
-
+    
     beforeEach(done => {
         chai.request(url)
         .post('/auth/login')
         .send(testUser)
-            .end(function (err, res) {
+        .end(function (err, res) {
             accessToken = res.body.accessToken
             expect(res).to.have.status(200);
             done();
         });
     });
-
+    
+    beforeEach(done => {
+        chai.request(url)
+        .post('/movies')
+        .set('Authorization','Bearer '+accessToken)
+        .send(testMovie)
+        .end(function (err, res) {
+            /* guardamos el id en una variable para poder utilizarlo en el test de detalle */
+            id_movie = res.body.data.id_movie
+            expect(res).to.have.status(201);
+            done();
+        });
+    });
+    
     afterEach( async () => {
         // Luego de cada test, elimina los datos creados
         const removeUser = await db.User.destroy({
             where: { username: testUser.username },
             force: true
         });
-        return removeUser
+        const removeMovie = await db.Movie.destroy({
+            where: { title: testMovie.title },
+            force: true
+        });
+        const removeCharacter = await db.Character.destroy({
+            where: { name: testMovie.characters[0].name },
+            force: true
+        });
+        return removeUser && removeMovie && removeCharacter
     });
-
+    
     it('should receive an error', done => {
         chai.request(url)
-        .post('/movies')
-        .set('Authorization','Bearer '+accessToken)
-        .send(testMovieError)
-        .end( function(err,res){
-            expect(res).to.have.status(500);
+        .put(`/movies/${id_movie}`)
+        .set('Authorization', 'Bearer ' + accessToken)
+        .send({})
+        .end(function (err, res) {
+            expect(res.body.error).to.have.property('msg').to.be.equal('Debe ingresar al menos un campo a actualizar')
+            expect(res).to.have.status(400);
             done();
         });
     });
 });
 
-describe('Create movies with authentication error  : ', () => {
-    it('should receive an authentication error', done => {
-        chai.request(url)
-        .post('/movies')
-        .end( function(err,res){
-            expect(res).to.have.status(401);
-            done();
-        });
-    });
-    it('should receive an expiration token error', done => {
-        chai.request(url)
-        .post('/movies')
-        .set('Authorization','Bearer '+tokenExpirated)
-        .end( function(err,res){
-            expect(res).to.have.status(403);
-            done();
-        });
-    });
-})
+/* ---------- Test Error: Not Found ----------*/
+
