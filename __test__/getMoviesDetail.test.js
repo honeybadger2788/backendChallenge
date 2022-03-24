@@ -101,11 +101,54 @@ describe('Get movie detail: ', () => {
     });
 });
 
+describe('Get movie detail that doesnt exist: ', () => {
+    beforeEach(done => {
+        chai.request(url)
+        .post('/auth/register')
+        .send(testUser)
+        .end( function(err,res){
+            expect(res).to.have.status(200);
+            done();
+        });
+    });
+    
+    beforeEach(done => {
+        chai.request(url)
+        .post('/auth/login')
+        .send(testUser)
+        .end(function (err, res) {
+            accessToken = res.body.accessToken
+            expect(res).to.have.status(200);
+            done();
+        });
+    });
+
+    afterEach( async () => {
+        // Luego de cada test, elimina los datos creados
+        const removeUser = await db.User.destroy({
+            where: { username: testUser.username },
+            force: true
+        });
+    
+        return removeUser 
+    });
+    
+    it('should get an error', done => {
+        chai.request(url)
+        .get(`/movies/12345678/detail`)
+        .set('Authorization','Bearer '+accessToken)
+        .end(function (err, res) {
+            expect(res).to.have.status(404);
+            done();
+        });
+    });
+});
+
 
 describe('Get movies with authentication error  : ', () => {
     it('should receive an authentication error', done => {
         chai.request(url)
-        .get('/movies')
+        .get('/movies/1/detail')
         .end( function(err,res){
             expect(res).to.have.status(401);
             done();
@@ -113,7 +156,7 @@ describe('Get movies with authentication error  : ', () => {
     });
     it('should receive an expiration token error', done => {
         chai.request(url)
-        .get('/movies')
+        .get('/movies/1/detail')
         .set('Authorization','Bearer '+tokenExpirated)
         .end( function(err,res){
             expect(res).to.have.status(403);
