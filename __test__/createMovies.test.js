@@ -31,6 +31,14 @@ const testMovie = {
     ]
 }
 
+const testMovieError = {
+    title: " ",
+    image_url: "https://www.testurl.com/",
+    launch_date: "22-11-2017",
+    rate: "5",
+    id_genre: "3",
+}
+
 const tokenExpirated = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InBydWViYUBob3RtYWlsLmNvbSIsImlhdCI6MTY0NzMwMjg5OSwiZXhwIjoxNjQ3MzA2NDk5fQ.uRELwZMeFEpmfCNc4cuM98XKfolQikLzDkZo7NrUTKM'
 
 describe('Create movies: ', () => {
@@ -119,7 +127,7 @@ describe('Create movies with errors: ', () => {
         chai.request(url)
         .post('/movies')
         .set('Authorization','Bearer '+accessToken)
-        .send({}) // no movie sent
+        .send(testMovieError)
         .end( function(err,res){
             expect(res).to.have.status(500);
             done();

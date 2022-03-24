@@ -93,7 +93,6 @@ describe('Get movie detail: ', () => {
         .get(`/movies/${id_movie}/detail`)
         .set('Authorization','Bearer '+accessToken)
         .end(function (err, res) {
-            /* console.log(res.body.data.id_movie) */
             expect(res.body.data).to.have.property('id_movie').to.be.equal(id_movie);
             expect(res).to.have.status(200);
             done();
