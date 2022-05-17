@@ -26,14 +26,13 @@ Utilizar tacnologías como **Sendgrid** y JWT fue totalmente nuevo para mi. Y si
 - [Instalacion](#instalacion)
 - [Uso](#uso)
 - [Documentacion](#documentacion)
+- [Test](#test)
 - [Footer](#footer)
 
 # Instalacion
 [(Subir)](#tabla-de-contenidos)
 
 Si quieres bajar este proyecto a tu dispositivo, puedes seguir los siguientes pasos. Sino, el mismo esta subido a Heroku para que puedas acceder a el sin necesidad de instalar nada.
-
-`$ git init`
 
 `$ git clone https://github.com/honeybadger2788/backendChallenge.git`
 
@@ -66,6 +65,14 @@ No te olvides de copiar tu token! Este tendra una validez de 1 hora pero no te p
 La documentacion fue realizada con Postman. En el link de abajo tendras acceso a la misma y alli encontraras tanto los endponints como los campos necesarios para utilizarla.
 
 [📑 Link to Documentation](https://documenter.getpostman.com/view/14968889/UVkqrZxu)
+
+# Test
+
+[(Subir)](#tabla-de-contenidos)
+
+Test realizado en Mocha y Chai.
+
+`$ npm run test`
 
 # Footer
 
