@@ -1,5 +1,3 @@
-![banner](./Banner.png)
-
 # DISNEY MOVIES API 🚀
 
 [Link to Disney API](https://disney-backend-challenge.herokuapp.com/)
