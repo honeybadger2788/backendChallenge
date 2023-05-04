@@ -78,7 +78,6 @@ Test realizado en Mocha y Chai.
 
 Gracias por llegar hasta aqui! Si quieres hacerme alguna recomendacion o simplemente contactarte conmigo, puedes hacerlo por cualquiera de estos medios:
 
-- [CV online](https://honeybadger2788.github.io/newCV/)
-- [Twitter](https://twitter.com/JGirlify)
+- [CV online](https://myporfolio.notion.site/Noelia-Carosella-c0c2f1dbfc8d403e8660356546e90f75)
 - [LinkedIn](https://www.linkedin.com/in/noeliabcarosella/)
 - [Mail](noe.carosella@gmail.com)
